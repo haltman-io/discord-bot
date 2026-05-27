@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Discord Bot Base Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "applicationId",
+    "defaultLocale",
+    "client",
+    "commands",
+    "security",
+    "connection",
+    "logging"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "applicationId": {
+      "type": "string",
+      "description": "Discord application/client ID."
+    },
+    "defaultLocale": {
+      "type": "string",
+      "default": "en-US"
+    },
+    "client": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intents", "partials", "presence"],
+      "properties": {
+        "intents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "partials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "presence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "activities"],
+          "properties": {
+            "status": {
+              "enum": ["online", "idle", "dnd", "invisible"]
+            },
+            "activities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "type"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "enum": ["Playing", "Streaming", "Listening", "Watching", "Custom", "Competing"]
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["autoRegisterOnStartup", "registrationScope", "deleteUnknownCommands"],
+      "properties": {
+        "autoRegisterOnStartup": {
+          "type": "boolean"
+        },
+        "registrationScope": {
+          "enum": ["guild", "global"]
+        },
+        "deleteUnknownCommands": {
+          "type": "boolean"
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ownerUserId",
+        "authorizedGuildIds",
+        "rejectDirectMessages",
+        "enforceAuthorizedGuilds",
+        "criticalActionsOwnerOnly",
+        "perUserCommandRateLimit"
+      ],
+      "properties": {
+        "ownerUserId": {
+          "type": "string"
+        },
+        "authorizedGuildIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "rejectDirectMessages": {
+          "type": "boolean"
+        },
+        "enforceAuthorizedGuilds": {
+          "type": "boolean"
+        },
+        "criticalActionsOwnerOnly": {
+          "type": "boolean"
+        },
+        "perUserCommandRateLimit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "maxUses", "windowMs"],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "maxUses": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "windowMs": {
+              "type": "integer",
+              "minimum": 1000
+            }
+          }
+        }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "loginMaxRetries",
+        "loginRetryBaseDelayMs",
+        "loginRetryMaxDelayMs",
+        "healthCheckIntervalMs",
+        "unhealthyPingThresholdMs",
+        "reconnectOnUnhealthy",
+        "reconnectCooldownMs",
+        "gracefulShutdownTimeoutMs"
+      ],
+      "properties": {
+        "loginMaxRetries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "loginRetryBaseDelayMs": {
+          "type": "integer",
+          "minimum": 250
+        },
+        "loginRetryMaxDelayMs": {
+          "type": "integer",
+          "minimum": 1000
+        },
+        "healthCheckIntervalMs": {
+          "type": "integer",
+          "minimum": 5000
+        },
+        "unhealthyPingThresholdMs": {
+          "type": "integer",
+          "minimum": 1000
+        },
+        "reconnectOnUnhealthy": {
+          "type": "boolean"
+        },
+        "reconnectCooldownMs": {
+          "type": "integer",
+          "minimum": 1000
+        },
+        "gracefulShutdownTimeoutMs": {
+          "type": "integer",
+          "minimum": 1000
+        }
+      }
+    },
+    "logging": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "directory"],
+      "properties": {
+        "level": {
+          "enum": ["debug", "info", "warn", "error"]
+        },
+        "directory": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

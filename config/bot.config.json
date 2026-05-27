@@ -1,0 +1,49 @@
+{
+  "$schema": "./bot.config.schema.json",
+  "applicationId": "YOUR_APPLICATION_ID",
+  "defaultLocale": "en-US",
+  "client": {
+    "intents": ["Guilds"],
+    "partials": [],
+    "presence": {
+      "status": "online",
+      "activities": [
+        {
+          "name": "reliable bots",
+          "type": "Watching"
+        }
+      ]
+    }
+  },
+  "commands": {
+    "autoRegisterOnStartup": true,
+    "registrationScope": "guild",
+    "deleteUnknownCommands": true
+  },
+  "security": {
+    "ownerUserId": "YOUR_OWNER_USER_ID",
+    "authorizedGuildIds": ["YOUR_GUILD_ID"],
+    "rejectDirectMessages": true,
+    "enforceAuthorizedGuilds": true,
+    "criticalActionsOwnerOnly": true,
+    "perUserCommandRateLimit": {
+      "enabled": true,
+      "maxUses": 8,
+      "windowMs": 10000
+    }
+  },
+  "connection": {
+    "loginMaxRetries": 12,
+    "loginRetryBaseDelayMs": 2000,
+    "loginRetryMaxDelayMs": 60000,
+    "healthCheckIntervalMs": 30000,
+    "unhealthyPingThresholdMs": 15000,
+    "reconnectOnUnhealthy": true,
+    "reconnectCooldownMs": 120000,
+    "gracefulShutdownTimeoutMs": 10000
+  },
+  "logging": {
+    "level": "info",
+    "directory": "logs"
+  }
+}
